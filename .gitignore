@@ -1,0 +1,19 @@
+# Airflow files
+config/airflow/
+plugins/
+
+# File with PostgreSQL credentials data
+config/credentials.ini
+config/servers_pgadmin.json
+config/client_secret.json
+config/pgpass
+config/process.env
+
+# Virtual environment
+venv
+
+# Logs file
+logs/
+
+# Byte-compiled / optimized / DLL files
+__pycache__

@@ -4,10 +4,13 @@ import logging
 import json
 import sys
 import os
+import joblib
 import warnings
 sys.path.append(os.path.abspath("/opt/airflow/shared_functions/"))
 from connect_database import ConnectionPostgres
 from kafka_functions import kafka_consumer, create_topic, delete_topic
+
+url_model = '/opt/airflow/shared_functions/model/random_forest_regressor_model.pkl'
 
 def create_table():
     """ Create table in the database. """
@@ -24,8 +27,10 @@ def consumer(columns_list):
     delete_topic('viewer_kafka')
     create_topic('viewer_kafka')
     consumer_kafka = kafka_consumer()
-    dataframe_list = list()
+
     viewer_dataframe = pd.DataFrame(columns = columns_list)
+    model_trainner = joblib.load(url_model)
+
     start_data = False
     for message in consumer_kafka:
         if message.value == '-/Start/-':
@@ -34,11 +39,9 @@ def consumer(columns_list):
         if message.value == '-/End/-':
             break
         if start_data:
-            logging.info(f"Message consumed: {message.value}")
-            dataframe = pd.json_normalize(data=message.value)
-            dataframe['happiness_predicted'] = 611
-            viewer_dataframe.loc[len(viewer_dataframe)] = dataframe.iloc[0].to_dict()
+            viewer_dataframe.loc[len(viewer_dataframe)] = message.value
     consumer_kafka.close()
+    viewer_dataframe['happiness_predicted'] = model_trainner.predict(viewer_dataframe.loc[:, ~viewer_dataframe.columns.isin(['id', 'country', 'region', 'happiness_rank', 'happiness_score', 'country_region', 'happiness_predicted'])])
     logging.info(f"Dataframe: {viewer_dataframe.shape}")
     logging.info(viewer_dataframe.head())
     delete_topic('viewer_kafka')

@@ -34,7 +34,7 @@ def viewer_workshop_003_dag():
     @task
     def consumer_data_task(continue_action=False):
         if continue_action:
-            columns_list = ["id", "country", "region", "happiness_rank", "happiness_score", "standard_error", "economy_per_capita", "family", "life_expectancy", "freedom", "government_corruption", "generosity", "dystopia_residual", "year", "lower_confidence_interval", "upper_confidence_interval", "whisker_high", "whisker_low", "country_region", "happiness_predicted"]
+            columns_list = ["id", "country", "region", "happiness_rank", "happiness_score", "economy_per_capita", "family", "life_expectancy", "freedom", "government_corruption", "generosity", "year", "country_region", "happiness_predicted"]
             return consumer(columns_list)
     @task
     def load_data_task(json_data):

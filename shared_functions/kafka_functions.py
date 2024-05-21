@@ -33,7 +33,10 @@ def delete_topic(topic_name):
     admin_client = KafkaAdminClient(
         bootstrap_servers = 'kafka_docker:9092'
         )
-    admin_client.delete_topics([topic_name])
+    try:
+        admin_client.delete_topics([topic_name])
+    except Exception as e:
+        pass
     return True
 
 def kafka_producer():

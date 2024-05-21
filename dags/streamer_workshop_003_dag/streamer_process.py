@@ -22,7 +22,6 @@ def extract(datasets_urls):
 
     logging.info("Extraction finished")
     return json.dumps(datasets_dict, indent=4)
-    #df.to_csv('opt/airflow/outputs/data.csv')
 
 def transform(json_data, columns, add_id=False):
     """ Transform the data extracted from the datasets. """
@@ -58,6 +57,8 @@ def transform_concatenated(json_data):
     concatenated_dataframe['region'] = concatenated_dataframe['country'].map(get_region_by_country())
     concatenated_dataframe['country_region'] = concatenated_dataframe['country'].fillna('') + ' - ' + concatenated_dataframe['region'].fillna('')
     concatenated_dataframe['country_region'] = concatenated_dataframe['country_region'].str.strip(' -')
+
+    concatenated_dataframe.drop(columns=['standard_error', 'dystopia_residual', 'lower_confidence_interval', 'upper_confidence_interval', 'whisker_high', 'whisker_low'], inplace=True)
 
     concatenated_dataframe.index += 1
     concatenated_dataframe.reset_index(inplace=True)

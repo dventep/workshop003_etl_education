@@ -14,6 +14,7 @@ class Happiness(BASE):
     id = Column(Integer, primary_key=True)
     country = Column(String(60), nullable=True, default=None)
     region = Column(String(60), nullable=True, default=None)
+    country_region = Column(String(60), nullable=True, default=None)
     happinnes_rank = Column(Integer(), nullable=True, default=None)
     happinnes_score = Column(Float(), nullable=True, default=None)
     happinnes_predicted = Column(Float(), nullable=True, default=None)
@@ -23,12 +24,6 @@ class Happiness(BASE):
     freedom = Column(Float(), nullable=True, default=None)
     government_corruption = Column(Float(), nullable=True, default=None)
     generosity = Column(Float(), nullable=True, default=None)
-    dystopia_residual = Column(Float(), nullable=True, default=None)
-    standard_error = Column(Float(), nullable=True, default=None) #!
-    lower_confidence_interval = Column(Float(), nullable=True, default=None) #!
-    upper_confidence_interval = Column(Float(), nullable=True, default=None) #!
-    whisker_low = Column(Float(), nullable=True, default=None) #!
-    whisker_high = Column(Float(), nullable=True, default=None) #!
 
     def __str__(self) -> str:
         return f"{self.happinnes_rank} vs. {self.happinnes_predicted}"

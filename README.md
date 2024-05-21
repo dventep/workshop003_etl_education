@@ -17,6 +17,7 @@ The tools used are:
    - <img src="https://raw.githubusercontent.com/get-icon/geticon/fc0f660daee147afb4a56c64e12bde6486b73e39/icons/visual-studio-code.svg" alt="Visual Studio Code" width="21px" height="21px"> **[Visual Studio Code](https://code.visualstudio.com/)**.
    - <img src="https://raw.githubusercontent.com/get-icon/geticon/fc0f660daee147afb4a56c64e12bde6486b73e39/icons/airflow.svg" alt="Airflow" width="21px" height="21px"> **[Apache Airflow](https://airflow.apache.org/docs/)**.
    - <img src="https://raw.githubusercontent.com/get-icon/geticon/fc0f660daee147afb4a56c64e12bde6486b73e39/icons/jupyter.svg" alt="Jupyter Notebook" width="21px" height="21px"> **[Jupyter Notebook](https://jupyter.org/)**.
+   - <img src="https://raw.githubusercontent.com/get-icon/geticon/fc0f660daee147afb4a56c64e12bde6486b73e39/icons/docker-icon.svg" alt="Docker" width="21px" height="21px"> **[Docker Desktop](https://www.docker.com/products/docker-desktop/)**.
 
 ---
 ### Purpose - Raison d'être
@@ -78,6 +79,8 @@ The project is aimed at demonstrating the skills necessary to train a model in a
 
 Read [installing_README.md](installing_README.md) for details on step by step to install the requirements to deploy this repository.
 
+Then we can run Airflow, once we have entered the credentials and we are in the home, we must activate both **viewer_workshop003_dag** and **streamer_workshop003_dag**, and start the dag in their respective order.
+
 ---
 ### Project organization
 
@@ -110,6 +113,9 @@ Read [installing_README.md](installing_README.md) for details on step by step to
    ├── shared_functions
    │   ├── database_models
    │   │   └── sql_classes.py                   <- SQL classes for database tables.
+   │   ├── model
+   │   │   └── model_trainner.log               <- Here we find the tests with the models in which we find the columns with which they were tested, the value of the split test and the random state with their respective R2 calculation.
+   │   │   └── random_forest_regressor_model.pkl<- This is the resulting model used in the airflow.
    │   ├── apply_columns.py                     <- Code to apply of the date from viewer_process.py and streamer_process.py. 
    │   ├── connect_database.py                  <- Code to establish and manage PostgreSQL database connection module. 
    │   └── kafka_functions.py                   <- Code to execute kafka and its functions. 
@@ -124,34 +130,48 @@ Read [installing_README.md](installing_README.md) for details on step by step to
 ---
 ### Conclusions
 
-The process is successfully completed with different tools in which AWS RDS and Ngrok are new to me, and Looker Studio very little previously. Although it’s a pity that they were randomly generated data, because the analysis could lend itself to be much deeper, finding correlations and using whisker plots for some variables.
+#### Conclusions 
 
-Throughout the process, some insights about this exploration and conclusions:
+After exploring the data of the 5 datasets, we obtain 17 columns, which are:
 
-- Column removed due to its assigning automately by SQLAlchemy:
+- **Country.**
+- **Region.**
+- **Country or Region.**
+- **Happiness Ranking.**
+- **Happiness Score.**
+- **Standard Error.**
+- **Lower Confidence Interval.**
+- **Upper Confidence Interval.**
+- **Whisker High.**
+- **Whisker Low.**
+- **Economy (GDP per Capita).**
+- **Family**
+- **Health (Life Expectancy).**
+- **Freedom.**
+- **Trust (government corruption).**
+- **Generosity.**
+- **Residual Dystopia.**
 
-   - _sa_instance_state
+From which good information is obtained to find the Happiness Score. 5 of these columns are discarded because we only have data from a little more than 1 quarter of the complete dataset, which are: **Standard Error**, **Upper and Lower Confidence Interval**, **Whisker High and Low**.
 
-- 10 columns to 16 columns loaded in **applicant** table in the database.
+The **Residual Dystopia** would bring us much the same as Happiness Rank, but this is part of the Happiness Score, so it will not be taken into account to predict the latter value.
 
-- 24 technologies were grouped into 8.
+There are a total of 782 records, but we will validate all of these assumptions at a later date.
 
-- 165 candidates have submitted a minimum of two applications.
+After testing 3 models which were:
 
-- 13.4% of candidates are will be hired.
+- Linear regression
 
-- As we can see, even randomly generated:
+- Random forest regressor
 
-   - The software technology has more movement.
+- Gradient boosting regressor
 
-   - Despite critical times such as the pandemic that affected the whole world, it did not affect hiring.
-
-   - The company is either growing a lot or the employee turnover is gigantic.
+Along with various splits of the data for training and testing, and the random state of the model, we found that using Random Forest Regressor along with a data split with random_state of 125 (seeing a pattern in the .log file) and 5452 as the random_state of the model we get the result shown: **R2: 0.8651** with columns: _'economy_per_capita'_, _'family'_, _'life_expectancy'_, _'freedom'_, _'government_corruption'_, _'generosity'_, _'year'_.
 
 ---
 ### Evidence
 
-   1. Complete and correct execution of dag Streamer_workshop_003_dag..
+   1. Complete and correct execution of dag Streamer_workshop_003_dag.
 
       ![Streamer_workshop_003_dag](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/b159a30ee5a4f33095c536a3f873ae1495736db8/streamer_workshop_003_dag.png)
 
@@ -160,7 +180,7 @@ Throughout the process, some insights about this exploration and conclusions:
       ![Viewer_workshop_003_dag](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/b159a30ee5a4f33095c536a3f873ae1495736db8/viewer_workshop_003_dag.png.png)
 
    4. Connection with Local PostgreSQL from PgAdmin.
-      ![PgAdmin with PostgreSQL]()
+      ![PgAdmin with PostgreSQL](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/1143ce3883e377e31425fc48bdc7e3471d8e0fb0/Data%2520by%2520PgAdmin.png)
 
 ---
 ### My support resources

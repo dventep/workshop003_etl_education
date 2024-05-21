@@ -128,8 +128,6 @@ Then we can run Airflow, once we have entered the credentials and we are in the 
 ```
 
 ---
-### Conclusions
-
 #### Conclusions 
 
 After exploring the data of the 5 datasets, we obtain 17 columns, which are:

@@ -154,9 +154,9 @@ From which good information is obtained to find the Happiness Score. 5 of these 
 
 The **Residual Dystopia** would bring us much the same as Happiness Rank, but this is part of the Happiness Score, so it will not be taken into account to predict the latter value.
 
-There are a total of 782 records, but we will validate all of these assumptions at a later date.
+There are a total of 781 records, but we will validate all of these assumptions at a later date.
 
-After testing 3 models which were:
+After testing 5 models which were:
 
 - Linear regression
 
@@ -164,9 +164,14 @@ After testing 3 models which were:
 
 - Gradient boosting regressor
 
-Along with various splits of the data for training and testing, and the random state of the model, we found that using Random Forest Regressor along with a data split with random_state of 125 (seeing a pattern in the .log file) and 5452 as the random_state of the model we get the result shown: **R2: 0.8651** with columns: _'economy_per_capita'_, _'family'_, _'life_expectancy'_, _'freedom'_, _'government_corruption'_, _'generosity'_, _'year'_.
+- XGBoost regressor.
+
+- Elastic Net.
+
+Along with various splits of the data for training and testing, and the random state of the model, we found that using Random Forest Regressor along with a data split with random_state of 5432 (seeing a pattern in the .log file) and 5452 as the random_state of the model we get the result shown: **R2: 0.89995** with columns: _'economy_per_capita'_, _'family'_, _'life_expectancy'_, _'freedom'_, _'government_corruption'_, _'generosity'_, _'year'_ and *country_region*.
 
 ---
+
 ### Evidence
 
    1. Complete and correct execution of dag Streamer_workshop_003_dag.
@@ -178,7 +183,7 @@ Along with various splits of the data for training and testing, and the random s
       ![Viewer_workshop_003_dag](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/b159a30ee5a4f33095c536a3f873ae1495736db8/viewer_workshop_003_dag.png.png)
 
    4. Connection with Local PostgreSQL from PgAdmin.
-      ![PgAdmin with PostgreSQL](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/1143ce3883e377e31425fc48bdc7e3471d8e0fb0/Data%2520by%2520PgAdmin.png)
+      ![PgAdmin with PostgreSQL](https://gist.githubusercontent.com/dventep/00758162d6f26179210bfee9dfc97a51/raw/6e94e11988e273b600644048a64c254d636b8e36/Data%2520by%2520PgAdmin.png)
 
 ---
 ### My support resources

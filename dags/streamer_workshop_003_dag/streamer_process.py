@@ -58,12 +58,14 @@ def transform_concatenated(json_data):
     concatenated_dataframe['country_region'] = concatenated_dataframe['country'].fillna('') + ' - ' + concatenated_dataframe['region'].fillna('')
     concatenated_dataframe['country_region'] = concatenated_dataframe['country_region'].str.strip(' -')
 
-    concatenated_dataframe.drop(columns=['standard_error', 'dystopia_residual', 'lower_confidence_interval', 'upper_confidence_interval', 'whisker_high', 'whisker_low'], inplace=True)
+    concatenated_dataframe.drop(columns=['standard_error', 'dystopia_residual', 'lower_confidence_interval', 'upper_confidence_interval', 'whisker_high', 'whisker_low', 'country', 'region', 'happiness_rank'], inplace=True)
 
     concatenated_dataframe.index += 1
     concatenated_dataframe.reset_index(inplace=True)
     concatenated_dataframe.rename(columns={'index': 'id'}, inplace=True)
-    
+
+    concatenated_dataframe.dropna(inplace=True)
+
     logging.info('Data concatenated transformed.')
     return concatenated_dataframe.to_json(orient='records')
 
@@ -79,6 +81,7 @@ def data_streaming(json_data):
     producer.send(topic, value='-/Start/-')
     for index in range(len(dataframe_to_stream)):
         producer.send(topic, value=dataframe_to_stream.iloc[index].to_dict())
+        
     producer.send(topic, value='-/End/-')
     producer.flush()
     producer.close()

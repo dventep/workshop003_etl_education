@@ -142,3 +142,29 @@ INFO:root:[1073, 125, 0.8610954720912636]
 INFO:root:[1126, 125, 0.8613591628752382]
 INFO:root:[2052, 125, 0.8623567292322858]
 INFO:root:[5452, 125, 0.8651474775171368] ---> Best
+---------------------------------- XGBRegressor
+--- 'economy_per_capita', 'family', 'life_expectancy','freedom', 'government_corruption', 'generosity', 'year', 'country_region' - unajusted data
+INFO:root:[10, 125, 0.8694202591224793]
+INFO:root:[15, 125, 0.8716139972571724]
+INFO:root:[0, 125, 0.867541591804496]
+------------------------------------------- RandomForestRegressor
+--- 'economy_per_capita', 'family', 'life_expectancy','freedom', 'government_corruption', 'generosity', 'year', 'country_region' - unajusted data
+INFO:root:[100, 0, 0.8445974695399562]
+INFO:root:[0, 125, 0.8729116369152031]
+INFO:root:[10, 125, 0.8694202591224793]
+INFO:root:[15, 125, 0.8716139972571724]
+INFO:root:[100, 125, 0.8652724867274886]
+INFO:root:[101, 125, 0.8655451312150725]
+INFO:root:[102, 125, 0.8667027775565697]
+INFO:root:[105, 125, 0.8680008153108892]
+INFO:root:[106, 125, 0.8682026024966523]
+INFO:root:[107, 125, 0.868889632932261]
+INFO:root:[111, 125, 0.8690428179443718]
+INFO:root:[116, 125, 0.8694514554805253]
+INFO:root:[118, 125, 0.8718116270335365]
+INFO:root:[162, 125, 0.873917833001572] ---> Best
+INFO:root:[507, 125, 0.87446116560116]
+INFO:root:[1326, 125, 0.8740554139815202]
+INFO:root:[2052, 125, 0.87451136908556]
+INFO:root:[4156, 125, 0.8748874565001151]
+INFO:root:[5452, 125, 0.8763139688661433]

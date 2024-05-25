@@ -12,10 +12,7 @@ class Happiness(BASE):
     __tablename__ = "happiness"
 
     id = Column(Integer, primary_key=True)
-    country = Column(String(60), nullable=True, default=None)
-    region = Column(String(60), nullable=True, default=None)
     country_region = Column(String(60), nullable=True, default=None)
-    happinnes_rank = Column(Integer(), nullable=True, default=None)
     happinnes_score = Column(Float(), nullable=True, default=None)
     happinnes_predicted = Column(Float(), nullable=True, default=None)
     economy_per_capita = Column(Float(), nullable=True, default=None)

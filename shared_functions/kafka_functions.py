@@ -9,10 +9,6 @@ def create_topic(topic_name):
     admin_client = KafkaAdminClient(
         bootstrap_servers = 'kafka_docker:9092'
         )
-    # admin_client.create_topics(
-    #     new_topics=[NewTopic(name = topic_name, num_partitions = 1, replication_factor = 1)],
-    #     validate_only=False
-    # )
     
     consumer = kafka_consumer()
     existing_topic_list = consumer.topics()

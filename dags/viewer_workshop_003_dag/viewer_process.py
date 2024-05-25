@@ -6,11 +6,20 @@ import sys
 import os
 import joblib
 import warnings
+from xgboost import XGBRegressor
+from sklearn.metrics import r2_score, mean_absolute_error, mean_squared_error
+from sklearn.pipeline import Pipeline
+from sklearn.compose import ColumnTransformer
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
+from sklearn.model_selection import train_test_split, cross_val_score, GridSearchCV, RandomizedSearchCV, StratifiedKFold
+from sklearn.linear_model import LinearRegression
+from sklearn.ensemble import RandomForestRegressor, GradientBoostingRegressor
+from sklearn.impute import SimpleImputer
 sys.path.append(os.path.abspath("/opt/airflow/shared_functions/"))
 from connect_database import ConnectionPostgres
 from kafka_functions import kafka_consumer, create_topic, delete_topic
 
-url_model = '/opt/airflow/shared_functions/model/random_forest_regressor_model.pkl'
+url_model = '/opt/airflow/shared_functions/model/model_trainner.pkl'
 
 def create_table():
     """ Create table in the database. """
@@ -41,7 +50,7 @@ def consumer(columns_list):
         if start_data:
             viewer_dataframe.loc[len(viewer_dataframe)] = message.value
     consumer_kafka.close()
-    viewer_dataframe['happiness_predicted'] = model_trainner.predict(viewer_dataframe.loc[:, ~viewer_dataframe.columns.isin(['id', 'country', 'region', 'happiness_rank', 'happiness_score', 'country_region', 'happiness_predicted'])])
+    viewer_dataframe['happiness_predicted'] = model_trainner.predict(viewer_dataframe.loc[:, ~viewer_dataframe.columns.isin(['id', 'happiness_score', 'happiness_predicted'])])
     logging.info(f"Dataframe: {viewer_dataframe.shape}")
     logging.info(viewer_dataframe.head())
     delete_topic('viewer_kafka')

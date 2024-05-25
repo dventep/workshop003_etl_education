@@ -115,7 +115,7 @@ Then we can run Airflow, once we have entered the credentials and we are in the 
    │   │   └── sql_classes.py                   <- SQL classes for database tables.
    │   ├── model
    │   │   └── model_trainner.log               <- Here we find the tests with the models in which we find the columns with which they were tested, the value of the split test and the random state with their respective R2 calculation.
-   │   │   └── random_forest_regressor_model.pkl<- This is the resulting model used in the airflow.
+   │   │   └── model_trainner.pkl               <- This is the resulting model used in the airflow.
    │   ├── apply_columns.py                     <- Code to apply of the date from viewer_process.py and streamer_process.py. 
    │   ├── connect_database.py                  <- Code to establish and manage PostgreSQL database connection module. 
    │   └── kafka_functions.py                   <- Code to execute kafka and its functions. 
